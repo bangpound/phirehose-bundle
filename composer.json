@@ -1,0 +1,13 @@
+{
+    "name": "bangpound/phirehose-bundle",
+    "description": "Symfony2 bundle to integrate Phirehose",
+    "require": {
+        "fennb/phirehose": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Benjamin Doherty",
+            "email": "bjd@bangpound.org"
+        }
+    ]
+}
