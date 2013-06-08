@@ -38,7 +38,7 @@ class BasicStream extends OauthPhirehose implements ContainerAwareInterface
 
     public function setBackend(BackendInterface $backend)
     {
-        $this->backend = $backend;        
+        $this->backend = $backend;
         return $this;
     }
 
