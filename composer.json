@@ -14,5 +14,6 @@
             "name": "Benjamin Doherty",
             "email": "bjd@bangpound.org"
         }
-    ]
+    ],
+    "target-dir": "Bangpound/PhirehoseBundle"
 }
