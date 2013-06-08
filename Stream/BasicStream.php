@@ -61,7 +61,12 @@ class BasicStream extends OauthPhirehose implements ContainerAwareInterface
      */
     public function enqueueStatus($status)
     {
-        $body = json_decode($status, true, 512, JSON_BIGINT_AS_STRING);
+        if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+            $body = json_decode($status, true, 512, JSON_BIGINT_AS_STRING);
+        }
+        else {
+            $body = json_decode($status, true, 512);
+        }
         // see https://dev.twitter.com/docs/streaming-apis/messages#Public_stream_messages
         //$types = array('delete', 'scrub_geo', 'limit', 'status_withheld', 'user_withheld', 'disconnect', 'warning');
         if (count($body) > 1) {
