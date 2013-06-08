@@ -71,11 +71,11 @@ class BasicStream extends OauthPhirehose implements ContainerAwareInterface
         //$types = array('delete', 'scrub_geo', 'limit', 'status_withheld', 'user_withheld', 'disconnect', 'warning');
         if (count($body) > 1) {
             $type = 'tweet';
-            $body = array('tweet' => $status);
+            $body = array('tweet' => trim($status));
         }
         else {
             $type = 'tweet__'. key($body);
-            $body = array(key($body) => $status);
+            $body = array(key($body) => trim($status));
         }
         $this->backend->createAndPublish($type, $body);
     }
