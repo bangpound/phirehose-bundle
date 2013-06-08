@@ -5,7 +5,9 @@
         "fennb/phirehose": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Bangpound\\PhirehoseBundle": "" }
+        "psr-0": {
+            "Bangpound\\PhirehoseBundle\\": ""
+        }
     },
     "authors": [
         {
