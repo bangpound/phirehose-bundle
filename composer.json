@@ -2,12 +2,6 @@
     "name": "bangpound/phirehose-bundle",
     "description": "Symfony2 bundle to integrate Phirehose",
     "license" : "MIT",
-    "repositories": [
-       {
-         "type": "vcs",
-         "url": "https://github.com/bangpound/phirehose"
-       }
-    ],
     "require": {
         "fennb/phirehose": "dev-develop"
     },

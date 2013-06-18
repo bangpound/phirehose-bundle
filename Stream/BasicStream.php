@@ -3,7 +3,7 @@
 namespace Bangpound\PhirehoseBundle\Stream;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OauthPhirehose as OauthPhirehose;
+use \OauthPhirehose as OauthPhirehose;
 use Sonata\NotificationBundle\Backend\BackendInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;

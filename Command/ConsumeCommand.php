@@ -34,7 +34,9 @@ class ConsumeCommand extends ContainerAwareCommand
         // Start streaming
 
         /* @var $stream Bangpound\PhirehoseBundle\Stream\BasicStream  */
-        $stream = $this->getContainer()->get('bangpound_phirehose.stream.basic')
-            ->setOutput($output)->consume();
+        $stream = $this->getContainer()->get('bangpound_phirehose.stream')
+            ->setOutput($output);
+        $stream->checkFilterPredicates();
+        $stream->consume();
     }
 }

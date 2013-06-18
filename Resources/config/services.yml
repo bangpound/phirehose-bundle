@@ -1,5 +1,5 @@
 parameters:
-    bangpound_phirehose.stream.basic.class: Bangpound\PhirehoseBundle\Stream\BasicStream
+    bangpound_phirehose.stream.class: Bangpound\PhirehoseBundle\Stream\BasicStream
     bangpound_phirehose.stream.subscriber.class: Bangpound\PhirehoseBundle\EventListener\StreamMessageSubscriber
     bangpound_phirehose.follow: []
     bangpound_phirehose.track: []
@@ -7,8 +7,8 @@ parameters:
     bangpound_phirehose.count: null
 
 services:
-    bangpound_phirehose.stream.basic:
-        class: %bangpound_phirehose.stream.basic.class%
+    bangpound_phirehose.stream:
+        class: %bangpound_phirehose.stream.class%
         arguments:
             - %bangpound_phirehose.oauth_token%
             - %bangpound_phirehose.oauth_secret%
