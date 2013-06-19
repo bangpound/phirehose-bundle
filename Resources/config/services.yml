@@ -1,6 +1,5 @@
 parameters:
     bangpound_phirehose.stream.class: Bangpound\PhirehoseBundle\Stream\BasicStream
-    bangpound_phirehose.stream.subscriber.class: Bangpound\PhirehoseBundle\EventListener\StreamMessageSubscriber
     bangpound_phirehose.follow: []
     bangpound_phirehose.track: []
     bangpound_phirehose.locations: []
@@ -19,9 +18,8 @@ services:
             - [setTrack, [%bangpound_phirehose.track%]]
             - [setLocations, [%bangpound_phirehose.locations%]]
             - [setCount, [%bangpound_phirehose.count%]]
-            - [setContainer, ["@service_container"]]
-            - [setBackend, ["@sonata.notification.backend"]]
-            - [setEntityManager, ["@sonata.notification.entity_manager"]]
+            - [setDispatcher, ['@event_dispatcher']]
+            - [setEntityManager, ["@doctrine.orm.entity_manager"]]
         properties:
             consumerKey: %bangpound_phirehose.twitter_consumer_key%
             consumerSecret: %bangpound_phirehose.twitter_consumer_secret%

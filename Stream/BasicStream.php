@@ -2,45 +2,20 @@
 
 namespace Bangpound\PhirehoseBundle\Stream;
 
+use Bangpound\PhirehoseBundle\Event\StreamMessageEvent;
+use Bangpound\PhirehoseBundle\PhirehoseEvents;
 use Doctrine\Common\Persistence\ObjectManager;
-use \OauthPhirehose as OauthPhirehose;
-use Sonata\NotificationBundle\Backend\BackendInterface;
+use OauthPhirehose as OauthPhirehose;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class BasicStream extends OauthPhirehose implements ContainerAwareInterface
+class BasicStream extends OauthPhirehose
 {
 
-    /**
-     * @var ContainerInterface
-     *
-     * @api
-     */
-    protected $container;
-    protected $backend;
+    protected $dispatcher;
     protected $output;
     protected $em;
     protected $lastMemoryUsage;
-
-    /**
-     * Sets the Container associated with this Controller.
-     *
-     * @param ContainerInterface $container A ContainerInterface instance
-     *
-     * @api
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-        return $this;
-    }
-
-    public function setBackend(BackendInterface $backend)
-    {
-        $this->backend = $backend;
-        return $this;
-    }
 
     public function setOutput(OutputInterface $output)
     {
@@ -54,10 +29,13 @@ class BasicStream extends OauthPhirehose implements ContainerAwareInterface
         return $this;
     }
 
+    public function setDispatcher(EventDispatcherInterface $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
+
     /**
-     * Enqueue each status
-     *
-     * @param string $status
+     * {@inheritdoc}
      */
     public function enqueueStatus($status)
     {
@@ -67,22 +45,14 @@ class BasicStream extends OauthPhirehose implements ContainerAwareInterface
         else {
             $body = json_decode($status, true, 512);
         }
-        // see https://dev.twitter.com/docs/streaming-apis/messages#Public_stream_messages
-        //$types = array('delete', 'scrub_geo', 'limit', 'status_withheld', 'user_withheld', 'disconnect', 'warning');
-        if (count($body) > 1) {
-            $type = 'tweet';
-            $body = array('tweet' => trim($status));
-        }
-        else {
-            $type = 'tweet__'. key($body);
-            $body = array(key($body) => trim($status));
-        }
-        $this->backend->createAndPublish($type, $body);
+
+        $eventName = count($body) > 1 ? PhirehoseEvents::TWEET : 'phirehose.'. key($body);
+        $event = new StreamMessageEvent(trim($status));
+        $this->dispatcher->dispatch($eventName, $event);
     }
 
     /**
-     * Called every $this->avgPeriod (default=60) seconds, and this default implementation
-     * calculates some rates, logs them, and resets the counters.
+     * {@inheritdoc}
      */
     public function heartbeat()
     {
@@ -120,15 +90,7 @@ class BasicStream extends OauthPhirehose implements ContainerAwareInterface
     }
 
     /**
-     * Basic log function that outputs logging to the standard error_log() handler. This should generally be overridden
-     * to suit the application environment.
-     *
-     * @param $messages
-     * @param $level 'error', 'info', 'notice'. Defaults to 'notice', so you should set this
-     *     parameter on the more important error messages.
-     *     'info' is used for problems that the class should be able to recover from automatically.
-     *     'error' is for exceptional conditions that may need human intervention. (For instance, emailing
-     *          them to a system administrator may make sense.)
+     * {@inheritdoc}
      */
     protected function log($message, $level = 'notice')
     {
