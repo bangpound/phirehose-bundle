@@ -1,3 +1,0 @@
-bangpound_phirehose_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: BangpoundPhirehoseBundle:Default:index }
