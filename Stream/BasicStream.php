@@ -72,8 +72,6 @@ class BasicStream extends OauthPhirehose
         $message .= 'Peak: '. $this->formatMemory(memory_get_peak_usage(TRUE));
         $this->log($message);
         $this->lastMemoryUsage = $memory_usage;
-        $this->em->flush();
-        $this->em->clear();
         parent::heartbeat();
     }
 
