@@ -20,12 +20,14 @@ class BasicStream extends OauthPhirehose
     public function setOutput(OutputInterface $output)
     {
         $this->output = $output;
+
         return $this;
     }
 
     public function setEntityManager(ObjectManager $em)
     {
         $this->em = $em;
+
         return $this;
     }
 
@@ -41,8 +43,7 @@ class BasicStream extends OauthPhirehose
     {
         if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
             $body = json_decode($status, true, 512, JSON_BIGINT_AS_STRING);
-        }
-        else {
+        } else {
             $body = json_decode($status, true, 512);
         }
 
@@ -58,13 +59,10 @@ class BasicStream extends OauthPhirehose
     {
         $memory_usage = memory_get_usage();
         $message = 'Memory usage: ' . $this->formatMemory($memory_usage) .', ';
-        if ($this->lastMemoryUsage)
-        {
+        if ($this->lastMemoryUsage) {
             if ($memory_usage > $this->lastMemoryUsage) {
                 $message .= 'Δ <info>'. $this->formatMemory($memory_usage - $this->lastMemoryUsage) .'</info>, ';
-            }
-            else
-            {
+            } else {
                 $message .= 'Δ '. $this->formatMemory($memory_usage - $this->lastMemoryUsage) .', ';
             }
         }
@@ -92,12 +90,9 @@ class BasicStream extends OauthPhirehose
      */
     protected function log($message, $level = 'notice')
     {
-        if ($level == 'notice')
-        {
+        if ($level == 'notice') {
           $this->output->writeln(sprintf('%s', trim($message)));
-        }
-        else
-        {
+        } else {
           $this->output->writeln(sprintf('<%s>%s</%s>', $level, trim($message), $level));
         }
     }
