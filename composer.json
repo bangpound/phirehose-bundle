@@ -6,7 +6,7 @@
         "fennb/phirehose": "dev-master"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Bangpound\\PhirehoseBundle\\": ""
         }
     },
@@ -15,6 +15,5 @@
             "name": "Benjamin Doherty",
             "email": "bjd@bangpound.org"
         }
-    ],
-    "target-dir": "Bangpound/PhirehoseBundle"
+    ]
 }
