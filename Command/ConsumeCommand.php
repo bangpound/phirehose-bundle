@@ -27,6 +27,6 @@ class ConsumeCommand extends ContainerAwareCommand
         $stream = $this->getContainer()->get('bangpound_phirehose.stream')
             ->setOutput($output);
         $stream->checkFilterPredicates();
-        $stream->consume();
+        $stream->consume(false);
     }
 }
