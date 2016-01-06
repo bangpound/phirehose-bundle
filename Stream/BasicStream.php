@@ -47,7 +47,7 @@ class BasicStream extends OauthPhirehose
             $body = json_decode($status, true, 512);
         }
 
-        $eventName = count($body) > 1 ? PhirehoseEvents::TWEET : 'phirehose.'. key($body);
+        $eventName = count($body) > 1 ? PhirehoseEvents::TWEET : 'phirehose.'.key($body);
         $event = new StreamMessageEvent(trim($status));
         $this->dispatcher->dispatch($eventName, $event);
     }
@@ -58,18 +58,19 @@ class BasicStream extends OauthPhirehose
     public function heartbeat()
     {
         $memory_usage = memory_get_usage();
-        $message = 'Memory usage: ' . $this->formatMemory($memory_usage) .', ';
+        $message = 'Memory usage: '.$this->formatMemory($memory_usage).', ';
         if ($this->lastMemoryUsage) {
             if ($memory_usage > $this->lastMemoryUsage) {
-                $message .= 'Δ <info>'. $this->formatMemory($memory_usage - $this->lastMemoryUsage) .'</info>, ';
+                $message .= 'Δ <info>'.$this->formatMemory($memory_usage - $this->lastMemoryUsage).'</info>, ';
             } else {
-                $message .= 'Δ '. $this->formatMemory($memory_usage - $this->lastMemoryUsage) .', ';
+                $message .= 'Δ '.$this->formatMemory($memory_usage - $this->lastMemoryUsage).', ';
             }
         }
 
-        $message .= 'Peak: '. $this->formatMemory(memory_get_peak_usage(TRUE));
+        $message .= 'Peak: '.$this->formatMemory(memory_get_peak_usage(true));
         $this->log($message);
         $this->lastMemoryUsage = $memory_usage;
+
         parent::heartbeat();
     }
 
@@ -77,11 +78,11 @@ class BasicStream extends OauthPhirehose
     {
         $memory = (int) $memory;
         if (abs($memory) < 1024) {
-            return $memory." B";
+            return $memory.' B';
         } elseif (abs($memory) < 1048576) {
-            return round($memory / 1024, 2)." KB";
+            return round($memory / 1024, 2).' KB';
         } else {
-            return round($memory / 1048576, 2)." MB";
+            return round($memory / 1048576, 2).' MB';
         }
     }
 
@@ -91,9 +92,9 @@ class BasicStream extends OauthPhirehose
     protected function log($message, $level = 'notice')
     {
         if ($level == 'notice') {
-          $this->output->writeln(sprintf('%s', trim($message)));
+            $this->output->writeln(sprintf('%s', trim($message)));
         } else {
-          $this->output->writeln(sprintf('<%s>%s</%s>', $level, trim($message), $level));
+            $this->output->writeln(sprintf('<%s>%s</%s>', $level, trim($message), $level));
         }
     }
 }
