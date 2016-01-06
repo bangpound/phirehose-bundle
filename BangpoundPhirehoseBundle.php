@@ -3,8 +3,8 @@
 namespace Bangpound\PhirehoseBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
 class BangpoundPhirehoseBundle extends Bundle
