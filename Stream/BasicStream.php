@@ -11,9 +11,19 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BasicStream extends OauthPhirehose
 {
-
+    /**
+     * @var EventDispatcherInterface
+     */
     protected $dispatcher;
+
+    /**
+     * @var OutputInterface
+     */
     protected $output;
+
+    /**
+     * @var ObjectManager
+     */
     protected $em;
     protected $lastMemoryUsage;
 
